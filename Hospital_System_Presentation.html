@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System - Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+        }
+        
+        .slide {
+            width: 1280px;
+            height: 720px;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+        
+        /* Title Slide */
+        .title-slide {
+            background: linear-gradient(135deg, #00363D 0%, #004d55 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .title-slide h1 {
+            color: white;
+            font-size: 64px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+        
+        .title-slide p {
+            color: #3EFFC0;
+            font-size: 28px;
+            font-weight: 400;
+        }
+        
+        /* Content Slides */
+        .content-slide {
+            padding: 0;
+        }
+        
+        .slide-header {
+            background: #00363D;
+            color: white;
+            padding: 25px 50px;
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .slide-content {
+            padding: 40px 60px;
+            font-size: 22px;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .slide-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .slide-content li {
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .slide-content li::before {
+            content: "•";
+            color: #00B0BC;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 28px;
+        }
+        
+        .slide-content li.sub {
+            padding-left: 60px;
+            font-size: 20px;
+            color: #555;
+        }
+        
+        .slide-content li.sub::before {
+            content: "◦";
+            left: 30px;
+        }
+        
+        /* Data Flow Diagram */
+        .flow-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            gap: 20px;
+        }
+        
+        .flow-box {
+            background: linear-gradient(135deg, #00B0BC 0%, #00363D 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 180px;
+        }
+        
+        .flow-box.patient {
+            background: linear-gradient(135deg, #3EFFC0 0%, #00B0BC 100%);
+            color: #00363D;
+        }
+        
+        .flow-box.db {
+            background: linear-gradient(135deg, #004d55 0%, #00363D 100%);
+        }
+        
+        .flow-box h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .flow-box p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .arrow {
+            font-size: 30px;
+            color: #666;
+        }
+        
+        .flow-steps {
+            padding: 20px 60px;
+            font-size: 18px;
+            line-height: 2;
+        }
+        
+        .flow-steps ol {
+            padding-left: 30px;
+        }
+        
+        /* HLD Diagram */
+        .hld-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 30px 40px;
+        }
+        
+        .layer-box {
+            width: 320px;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .layer-box.presentation {
+            background: linear-gradient(135deg, #3EFFC0 0%, #00B0BC 100%);
+            color: #00363D;
+        }
+        
+        .layer-box.business {
+            background: linear-gradient(135deg, #00B0BC 0%, #00363D 100%);
+            color: white;
+        }
+        
+        .layer-box.data {
+            background: linear-gradient(135deg, #00363D 0%, #002a30 100%);
+            color: white;
+        }
+        
+        .layer-box h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .layer-box p {
+            font-size: 14px;
+            margin: 5px 0;
+            opacity: 0.9;
+        }
+        
+        .hld-arrow {
+            display: flex;
+            align-items: center;
+            font-size: 40px;
+            color: #666;
+        }
+        
+        .components-box {
+            margin: 20px 60px;
+            background: #F8FAFA;
+            border: 2px solid #00B0BC;
+            border-radius: 10px;
+            padding: 25px;
+        }
+        
+        .components-box h4 {
+            color: #00363D;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .components-box ul {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        
+        @media print {
+            .slide {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide title-slide">
+    <h1>Hospital Management System</h1>
+    <p>EverVault - Smart Healthcare Scheduling</p>
+</div>
+
+<!-- Slide 2: Project Overview -->
+<div class="slide content-slide">
+    <div class="slide-header">Project Overview</div>
+    <div class="slide-content">
+        <ul>
+            <li>A full-stack web application for hospital equipment booking and queue management</li>
+            <li>Frontend: React.js with modern UI/UX design</li>
+            <li>Backend: Spring Boot REST API with MySQL database</li>
+            <li>Real-time queue management with priority-based scheduling</li>
+            <li>Equipment status tracking (Available, In-Use, Maintenance)</li>
+            <li>Comprehensive test coverage: JUnit (backend) + Jest (frontend)</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 3: Key Features -->
+<div class="slide content-slide">
+    <div class="slide-header">Key Features</div>
+    <div class="slide-content">
+        <ul>
+            <li>Patient Portal: Book appointments, view equipment availability</li>
+            <li>Admin Dashboard: Manage queues, approve bookings, call next patient</li>
+            <li>Priority System: Emergency > Urgent > Normal</li>
+            <li>Real-time Updates: Equipment status and queue positions</li>
+            <li>Validation: Past date prevention, maintenance equipment blocking</li>
+            <li>Procedure Duration Display: Shows estimated time for each equipment</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 4: Tech Stack -->
+<div class="slide content-slide">
+    <div class="slide-header">Technology Stack</div>
+    <div class="slide-content">
+        <ul>
+            <li>Frontend: React 19, Vite, CSS3</li>
+            <li>Backend: Spring Boot 3.2, Java 17</li>
+            <li>Database: MySQL 8.0</li>
+            <li>Testing: JUnit 5 (Backend), Jest + React Testing Library (Frontend)</li>
+            <li>API Documentation: Swagger/OpenAPI</li>
+            <li>Build Tools: Maven (Backend), npm (Frontend)</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 5: Data Flow Diagram -->
+<div class="slide content-slide">
+    <div class="slide-header">Data Flow Diagram</div>
+    <div class="flow-container">
+        <div class="flow-box patient">
+            <h4>Patient</h4>
+            <p>Browser</p>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-box">
+            <h4>React Frontend</h4>
+            <p>Port 5173</p>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-box">
+            <h4>Spring Boot API</h4>
+            <p>Port 8080</p>
+        </div>
+        <div class="arrow">→</div>
+        <div class="flow-box db">
+            <h4>MySQL DB</h4>
+            <p>Port 3306</p>
+        </div>
+    </div>
+    <div class="flow-steps">
+        <ol>
+            <li>Patient books appointment via React Frontend</li>
+            <li>Frontend sends POST /api/bookings to Spring Boot</li>
+            <li>Backend validates (past date, maintenance status)</li>
+            <li>Valid booking saved to MySQL database</li>
+            <li>Admin calls next patient via Admin Dashboard</li>
+            <li>Equipment status auto-updates (IN_USE → AVAILABLE after 8s)</li>
+        </ol>
+    </div>
+</div>
+
+<!-- Slide 6: High Level Design -->
+<div class="slide content-slide">
+    <div class="slide-header">High Level Design (HLD)</div>
+    <div class="hld-container">
+        <div class="layer-box presentation">
+            <h3>Presentation Layer</h3>
+            <p>React Components</p>
+            <p>PatientView | AdminView</p>
+            <p>NavBar | LandingView</p>
+        </div>
+        <div class="hld-arrow">→</div>
+        <div class="layer-box business">
+            <h3>Business Logic Layer</h3>
+            <p>Spring Boot Services</p>
+            <p>QueueService | Validation</p>
+            <p>Priority Sorting | Queue Mgmt</p>
+        </div>
+        <div class="hld-arrow">→</div>
+        <div class="layer-box data">
+            <h3>Data Layer</h3>
+            <p>MySQL + JPA Repositories</p>
+            <p>Booking Repository</p>
+            <p>Equipment Repository</p>
+        </div>
+    </div>
+    <div class="components-box">
+        <h4>Key Components</h4>
+        <ul>
+            <li><strong>Controller Layer:</strong> HospitalController - REST endpoints, exception handling</li>
+            <li><strong>Service Layer:</strong> QueueService - Business logic, priority sorting, validation</li>
+            <li><strong>Repository Layer:</strong> JPA Repositories - Database operations</li>
+            <li><strong>Model Layer:</strong> Booking, Equipment, Priority, EquipmentStatus - Entity classes</li>
+            <li><strong>Security:</strong> Input validation, past date check, maintenance status check</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 7: Testing Summary -->
+<div class="slide content-slide">
+    <div class="slide-header">Testing Summary</div>
+    <div class="slide-content">
+        <ul>
+            <li>Backend Tests (JUnit 5): 37 tests</li>
+            <li class="sub">Repository Tests: Database operations</li>
+            <li class="sub">Service Tests: Business logic, validation</li>
+            <li class="sub">Controller Tests: API endpoints, error handling</li>
+            <li>Frontend Tests (Jest): 48 tests</li>
+            <li class="sub">Component rendering</li>
+            <li class="sub">User interactions (clicks, form inputs)</li>
+            <li class="sub">Navigation and state management</li>
+            <li>Validation Tests:</li>
+            <li class="sub">Past date booking prevention</li>
+            <li class="sub">Maintenance equipment blocking</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 8: Demo Flow -->
+<div class="slide content-slide">
+    <div class="slide-header">Demo Flow</div>
+    <div class="slide-content">
+        <ul>
+            <li>1. Start Backend: java -jar target/backend-0.0.1-SNAPSHOT.jar</li>
+            <li>2. Start Frontend: npm run dev</li>
+            <li>3. Open Swagger UI: http://localhost:8080/swagger-ui.html</li>
+            <li>4. Show API Testing: Create booking, validate errors</li>
+            <li>5. Show Frontend: Patient portal, Admin dashboard</li>
+            <li>6. Show Queue Management: Call next patient, auto-status update</li>
+            <li>7. Run Backend Tests: mvn test</li>
+            <li>8. Run Frontend Tests: npm test -- --watchAll=false</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 9: Thank You -->
+<div class="slide title-slide">
+    <h1>Thank You!</h1>
+    
+</div>
+
+</body>
+</html>

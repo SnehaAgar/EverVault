@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EverVault – Diagrams for PPT</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { color: #1a365d; }
+    h2 { color: #2d3748; margin-top: 2rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+    .diagram { background: #f7fafc; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
+    .mermaid { display: flex; justify-content: center; }
+    p { color: #4a5568; }
+  </style>
+</head>
+<body>
+  <h1>EverVault – Diagrams for PPT</h1>
+  <p>Open this file in a browser and take screenshots of each diagram for your PowerPoint.</p>
+
+  <h2>1. High-Level Design</h2>
+  <div class="diagram">
+    <div class="mermaid">
+flowchart TB
+    subgraph Browser["Browser"]
+        UI[React Frontend - Landing, Patient, Admin]
+    end
+    subgraph Backend["Spring Boot :8080"]
+        Controller[HospitalController /api/*]
+        Service[QueueService]
+        Repo[EquipmentRepository, BookingRepository]
+        Controller --> Service --> Repo
+    end
+    DB[(MySQL hospital_system)]
+    UI -->|REST| Controller
+    Repo --> DB
+    </div>
+  </div>
+
+  <h2>2. Data Flow (Sequence)</h2>
+  <div class="diagram">
+    <div class="mermaid">
+sequenceDiagram
+    participant U as User (Browser)
+    participant F as React Frontend
+    participant C as HospitalController
+    participant Q as QueueService
+    participant R as Repository
+    participant DB as MySQL
+
+    U->>F: Open Patient Portal / Select equipment
+    F->>C: GET /api/equipment
+    C->>Q: get queue, next slot
+    Q->>R: findAll(), findByEquipmentIdAndStatus()
+    R->>DB: SELECT
+    DB-->>R: rows
+    R-->>Q: list
+    Q-->>C: enriched equipment
+    C-->>F: JSON
+    F-->>U: Show equipment + queue
+
+    U->>F: Submit booking
+    F->>C: POST /api/bookings
+    C->>Q: createBookingRequest()
+    Q->>R: save(booking)
+    R->>DB: INSERT
+    DB-->>R: ok
+    R-->>Q: booking
+    Q-->>C: booking
+    C-->>F: 201 + booking
+    F-->>U: Success message
+
+    U->>F: Admin: Confirm / Call Next
+    F->>C: POST /api/bookings/:id/confirm or POST /api/queue/:id/next
+    C->>Q: confirmBooking() or callNext()
+    Q->>R: save()
+    R->>DB: UPDATE
+    DB-->>R: ok
+    R-->>Q: entity
+    Q-->>C: result
+    C-->>F: JSON
+    F-->>U: UI updates
+    </div>
+  </div>
+
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+</body>
+</html>
